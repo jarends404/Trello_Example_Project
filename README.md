@@ -39,7 +39,8 @@ In the bottom-left corner, select `edit configuration templates...`. Next, selec
 You can also choose other browsers. Currently supported browsers are Chrome, Firefox and Safari. <br/>
 Once you applied these settings, click Apply and then OK.
 
-The last step is to click the run button next to a feature or scenario and choose run!
+The last step is to click the run button next to a feature or scenario and choose run! <br/>
+You can find the feature files under `src/test/resources/nl/example/features`.
 
 ### Running test cases through the command line using Maven
 
