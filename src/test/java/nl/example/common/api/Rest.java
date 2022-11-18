@@ -38,6 +38,16 @@ public class Rest {
                 .and().extract().response();
     }
 
+    public Response getRequest(final String endpoint, final String id) {
+        String formattedEndpoint = formatId(endpoint, id);
+
+        return request.when()
+                .get(formattedEndpoint)
+                .then()
+                .statusCode(200)
+                .and().extract().response();
+    }
+
     public Response postRequest(final String endpoint) {
         return request.when()
                 .post(endpoint)

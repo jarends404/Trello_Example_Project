@@ -5,8 +5,7 @@ import lombok.Getter;
 
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class BoardResponse {
+public class ListResponse {
     private String id;
-    private String url;
     private String name;
 }

@@ -5,6 +5,7 @@ import io.restassured.response.Response;
 import nl.example.common.api.QueryParameter;
 import nl.example.data.dto.Board;
 import nl.example.data.response.BoardResponse;
+import nl.example.data.response.ListResponse;
 import nl.example.testers.base.BaseTester;
 import org.junit.jupiter.api.Assertions;
 import org.junit.platform.commons.util.StringUtils;
@@ -17,27 +18,22 @@ public class BoardTester extends BaseTester {
 
     private static final String POST_BOARD_ENDPOINT = "/1/boards/";
     private static final String UPDATE_BOARD_ENDPOINT = "/1/boards/{id}";
-    private static final String GET_BOARDS_ENDPOINT = "/1/members/me/boards?fields=name,url";
+    private static final String GET_BOARDS_ENDPOINT = "/1/members/me/boards";
+    private static final String GET_LISTS_ON_BOARD_ENDPOINT = "/1/boards/{id}/lists";
 
     private String boardId;
 
     public void createBoard(Board board) {
-        QueryParameter boardName = QueryParameter.builder()
-                .key("name").value(board.getName())
-                .build();
+        QueryParameter name = new QueryParameter("name", board.getName());
+        Response response = getRest().addQueryParameter(name).postRequest(POST_BOARD_ENDPOINT);
 
-        Response response = getRest().addQueryParameter(boardName).postRequest(POST_BOARD_ENDPOINT);
         boardId = response.then().extract().path("id");
-
         Assertions.assertEquals(board.getName(), response.then().extract().path("name"));
     }
 
     public void closeBoard() {
         if (StringUtils.isNotBlank(boardId)) {
-            QueryParameter closed = QueryParameter.builder()
-                            .key("closed").value("false")
-                            .build();
-
+            QueryParameter closed = new QueryParameter("closed", "true");
             getRest().addQueryParameter(closed).putRequest(UPDATE_BOARD_ENDPOINT, boardId);
         }
     }
@@ -60,6 +56,20 @@ public class BoardTester extends BaseTester {
                 .orElseThrow(() -> new CucumberException("Created board not found in list"));
 
         return new URL(createdBoard.getUrl()).getPath();
+    }
+
+    public String getListId(String list) {
+        List<ListResponse> lists = getRest().getRequest(GET_LISTS_ON_BOARD_ENDPOINT, boardId)
+                .then()
+                .extract()
+                .body().jsonPath().getList(".", ListResponse.class);
+
+        ListResponse wantedList = lists.stream()
+                .filter(item -> item.getName().equals(list))
+                .findFirst()
+                .orElseThrow(() -> new CucumberException("Created board not found in list"));
+
+        return wantedList.getId();
     }
 
 }

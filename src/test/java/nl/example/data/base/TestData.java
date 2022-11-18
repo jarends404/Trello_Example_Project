@@ -40,7 +40,7 @@ public class TestData {
 
     public Card getCard() {
         return Card.builder()
-                .title("test_card_" + FAKER.number().digits(5))
+                .name("test_card_" + FAKER.number().digits(5))
                 .description(FAKER.harryPotter().quote())
                 .build();
     }

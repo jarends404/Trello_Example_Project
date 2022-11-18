@@ -1,10 +1,10 @@
 package nl.example.common.api;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@Builder
+@AllArgsConstructor
 public class QueryParameter {
     private String key;
     private String value;

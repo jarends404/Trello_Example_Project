@@ -6,6 +6,6 @@ import lombok.Getter;
 @Getter
 @Builder
 public class Card {
-    private String title;
+    private String name;
     private String description;
 }
