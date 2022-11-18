@@ -11,11 +11,9 @@ import java.util.Map;
 
 public class Rest {
 
-    public static Rest rest;
-
     private final RequestSpecification request;
 
-    private Rest() {
+    public Rest() {
         Environment environment = Environment.getInstance();
 
         request = RestAssured.given();
@@ -23,13 +21,6 @@ public class Rest {
         request.queryParam("key", environment.getProperty("apiKey"));
         request.queryParam("token", environment.getProperty("token"));
         request.contentType("application/json");
-    }
-
-    public static Rest getInstance() {
-        if (rest == null) {
-            rest = new Rest();
-        }
-        return rest;
     }
 
     public Rest addQueryParameter(QueryParameter... parameters) {
