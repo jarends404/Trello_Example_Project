@@ -16,7 +16,7 @@ import java.util.List;
 public class BoardTester extends BaseTester {
 
     private static final String POST_BOARD_ENDPOINT = "/1/boards/";
-    private static final String DELETE_BOARD_ENDPOINT = "/1/boards/{id}";
+    private static final String UPDATE_BOARD_ENDPOINT = "/1/boards/{id}";
     private static final String GET_BOARDS_ENDPOINT = "/1/members/me/boards?fields=name,url";
 
     private String boardId;
@@ -32,9 +32,19 @@ public class BoardTester extends BaseTester {
         Assertions.assertEquals(board.getName(), response.then().extract().path("name"));
     }
 
+    public void closeBoard() {
+        if (StringUtils.isNotBlank(boardId)) {
+            QueryParameter closed = QueryParameter.builder()
+                            .key("closed").value("false")
+                            .build();
+
+            getRest().addQueryParameter(closed).putRequest(UPDATE_BOARD_ENDPOINT, boardId);
+        }
+    }
+
     public void deleteBoard() {
         if (StringUtils.isNotBlank(boardId)) {
-            getRest().deleteRequest(DELETE_BOARD_ENDPOINT, boardId);
+            getRest().deleteRequest(UPDATE_BOARD_ENDPOINT, boardId);
         }
     }
 

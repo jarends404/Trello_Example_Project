@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 import lombok.Getter;
 import nl.example.data.AtlassianAccount;
 import nl.example.data.dto.Board;
+import nl.example.data.dto.Card;
 
 import java.util.Locale;
 
@@ -34,6 +35,13 @@ public class TestData {
                 .defaultLabels(true)
                 .defaultLists(true)
                 .desc(FAKER.harryPotter().quote())
+                .build();
+    }
+
+    public Card getCard() {
+        return Card.builder()
+                .title("test_card_" + FAKER.number().digits(5))
+                .description(FAKER.harryPotter().quote())
                 .build();
     }
 

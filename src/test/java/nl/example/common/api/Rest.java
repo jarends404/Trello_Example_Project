@@ -55,6 +55,16 @@ public class Rest {
                 .and().extract().response();
     }
 
+    public Response putRequest(final String endpoint, final String id) {
+        String formattedEndpoint = formatId(endpoint, id);
+
+        return request.when()
+                .put(formattedEndpoint)
+                .then()
+                .statusCode(200)
+                .and().extract().response();
+    }
+
     public Response deleteRequest(final String endpoint, final String id) {
         String formattedEndpoint = formatId(endpoint, id);
 
