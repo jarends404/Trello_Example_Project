@@ -1,14 +1,17 @@
 package nl.example.pages.base;
 
-import nl.example.util.Browser;
+import lombok.Getter;
+import nl.example.common.web.Browser;
 import org.junit.jupiter.api.Assertions;
 
 public class BasePage {
 
-    protected Browser browser = Browser.getInstance();
+    @Getter
+    private final Browser browser = Browser.getInstance();
 
-    protected void isAt(String url) {
-        Assertions.assertTrue(browser.getCurrentUrl().contains(url));
+    protected void isAt(final String uri) {
+        browser.waitUntilUrlContains(uri);
+        Assertions.assertTrue(browser.getCurrentUrl().contains(uri));
     }
 
 }

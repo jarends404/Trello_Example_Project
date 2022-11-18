@@ -1,13 +1,16 @@
-package nl.example.util;
+package nl.example.common.web;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import nl.example.common.env.Environment;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -28,6 +31,8 @@ public class Browser {
     private static final String BASE_URL_PROPERTY_NAME = "baseUrl";
     private static final String GET_PAGE_READYSTATE = "return document.readyState";
     private static final String READYSTATE_COMPLETE = "complete";
+
+    private Set<Cookie> cookies = new HashSet<>();
 
     private Browser() {
     }
@@ -77,9 +82,11 @@ public class Browser {
      */
     public void get(String uri) {
         driver.get(environment.getProperty(BASE_URL_PROPERTY_NAME) + uri);
+        waitUntilPageFullyLoaded();
     }
 
     public String getCurrentUrl() {
+        waitUntilPageFullyLoaded();
         return driver.getCurrentUrl();
     }
 
@@ -95,9 +102,8 @@ public class Browser {
      * @return          List of all matching elements
      */
     public List<WebElement> findElements(String selector) {
-        wait.until(webDriver -> ((JavascriptExecutor) webDriver)
-                .executeScript(GET_PAGE_READYSTATE).equals(READYSTATE_COMPLETE));
-        return driver.findElements(By.cssSelector(selector));
+        waitUntilPageFullyLoaded();
+        return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector(selector)));
     }
 
     /**
@@ -108,9 +114,8 @@ public class Browser {
      * @return          WebElement
      */
     public WebElement findElement(String selector) {
-        wait.until(webDriver -> ((JavascriptExecutor) webDriver)
-                .executeScript(GET_PAGE_READYSTATE).equals(READYSTATE_COMPLETE));
-        return driver.findElement(By.cssSelector(selector));
+        waitUntilPageFullyLoaded();
+        return wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(selector)));
     }
 
     public String getPageSource() {
@@ -147,5 +152,28 @@ public class Browser {
 
     public byte[] makeScreenshot() {
         return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+    }
+
+    public void waitUntilUrlContains(final String uri) {
+        wait.until(ExpectedConditions.urlContains(uri));
+    }
+
+    public boolean isFirstScenario() {
+        return cookies.isEmpty();
+    }
+
+    public void storeSession() {
+        cookies = driver.manage().getCookies();
+    }
+
+    public void restoreSession() {
+        for (Cookie cookie : cookies) {
+            driver.manage().addCookie(cookie);
+        }
+    }
+
+    private void waitUntilPageFullyLoaded() {
+        wait.until(webDriver -> ((JavascriptExecutor) webDriver)
+                .executeScript(GET_PAGE_READYSTATE).equals(READYSTATE_COMPLETE));
     }
 }

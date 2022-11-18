@@ -1,4 +1,4 @@
-package nl.example.util;
+package nl.example.common.env;
 
 import java.io.IOException;
 import java.util.Properties;

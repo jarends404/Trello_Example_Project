@@ -20,6 +20,11 @@
         <junit-platform.version>1.9.1</junit-platform.version>
         <maven-surefire.version>3.0.0-M7</maven-surefire.version>
         <maven-help.version>3.1.0</maven-help.version>
+        <rest-assured.version>5.2.0</rest-assured.version>
+        <lombok.version>1.18.24</lombok.version>
+        <faker.version>1.0.2</faker.version>
+        <jackson.version>2.13.3</jackson.version>
+        <apache-commons.version>1.10.0</apache-commons.version>
     </properties>
 
     <dependencies>
@@ -58,6 +63,34 @@
             <version>${junit-platform.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${rest-assured.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>${faker.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jdk8</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>${apache-commons.version}</version>
+        </dependency>
+
     </dependencies>
 
     <profiles>
