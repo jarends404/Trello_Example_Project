@@ -1,6 +1,8 @@
 package nl.example.steps;
 
 import io.cucumber.java.After;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import nl.example.data.dto.Board;
@@ -14,13 +16,18 @@ public class BoardSteps extends BaseSteps {
     private final BoardTester tester = new BoardTester();
     private final Board board = getData().getBoard();
 
-    @When("I create a new board")
+    @After("@deleteBoardAfter")
+    public void deleteBoard() {
+        tester.deleteBoard();
+    }
+
+    @Given("I create a new board")
     public void iCreateANewBoard() {
         tester.createBoard(board);
     }
 
     @When("I visit my board")
-    public void iRetrieveAllBoards() throws MalformedURLException {
+    public void iVisitMyBoard() throws MalformedURLException {
         String uri = tester.getBoardUri(board);
         getPages().common.navigateTo(uri);
     }
@@ -30,8 +37,13 @@ public class BoardSteps extends BaseSteps {
         getPages().board.verifyDefaultElementsVisible(board);
     }
 
-    @After("@deleteBoardAfter")
-    public void deleteBoard() {
-        tester.deleteBoard();
+    @And("I create a new card in the {string} list")
+    public void iCreateANewCardInTheList(String list) {
+
+    }
+
+    @Then("my created card is visible")
+    public void myCreatedCardIsVisible() {
+
     }
 }

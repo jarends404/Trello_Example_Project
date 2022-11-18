@@ -1,10 +1,12 @@
 package nl.example.testers;
 
 import io.cucumber.core.exception.CucumberException;
+import io.restassured.response.Response;
 import nl.example.common.api.QueryParameter;
 import nl.example.data.dto.Board;
 import nl.example.data.response.BoardResponse;
 import nl.example.testers.base.BaseTester;
+import org.junit.jupiter.api.Assertions;
 import org.junit.platform.commons.util.StringUtils;
 
 import java.net.MalformedURLException;
@@ -24,8 +26,10 @@ public class BoardTester extends BaseTester {
                 .key("name").value(board.getName())
                 .build();
 
-        boardId = getRest().addQueryParameter(boardName).postRequest(POST_BOARD_ENDPOINT)
-                .then().extract().path("id");
+        Response response = getRest().addQueryParameter(boardName).postRequest(POST_BOARD_ENDPOINT);
+        boardId = response.then().extract().path("id");
+
+        Assertions.assertEquals(board.getName(), response.then().extract().path("name"));
     }
 
     public void deleteBoard() {
@@ -40,12 +44,12 @@ public class BoardTester extends BaseTester {
                 .extract()
                 .body().jsonPath().getList(".", BoardResponse.class);
 
-        BoardResponse boardResponse = boards.stream()
+        BoardResponse createdBoard = boards.stream()
                 .filter(item -> item.getName().equals(board.getName()))
                 .findFirst()
                 .orElseThrow(() -> new CucumberException("Created board not found in list"));
 
-        return new URL(boardResponse.getUrl()).getPath();
+        return new URL(createdBoard.getUrl()).getPath();
     }
 
 }
