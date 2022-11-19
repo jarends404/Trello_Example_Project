@@ -26,7 +26,7 @@ public class BoardSteps extends BaseSteps {
         boardTester.deleteBoard();
     }
 
-    @Given("I create a new board")
+    @Given("a new board")
     public void iCreateANewBoard() {
         boardTester.createBoard(board);
     }
@@ -38,8 +38,9 @@ public class BoardSteps extends BaseSteps {
     }
 
     @When("I move the card to the {string} list")
-    public void iMoveTheCardToTheList(String list) {
-        System.out.println("");
+    public void iMoveTheCardFromTheListToTheList(String listTo) {
+        getPages().board.openCardDetails(card.getName());
+        getPages().card.moveCardToList(listTo);
     }
 
     @Then("my created board is visible")
@@ -52,19 +53,14 @@ public class BoardSteps extends BaseSteps {
         getPages().board.addCard(list, card.getName());
     }
 
-    @And("add a card to the {string} list")
+    @And("a card in the {string} list")
     public void addACardToTheList(String list) {
         String listId = boardTester.getListId(list);
         cardTester.createCard(card, listId);
     }
 
-    @Then("my created card is visible")
-    public void myCreatedCardIsVisible() {
-        getPages().board.verifyCardInList(card.getName());
-    }
-
     @Then("the card is displayed in the {string} list")
     public void theCardIsDisplayedInTheList(String list) {
-
+        getPages().board.verifyCardInList(card.getName(), list);
     }
 }

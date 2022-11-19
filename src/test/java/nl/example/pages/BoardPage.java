@@ -34,15 +34,29 @@ public class BoardPage extends BasePage {
         listDivisions().stream()
                 .filter(div -> div.getText().startsWith(list))
                 .findFirst()
-                .ifPresentOrElse(div -> addACardButton(div).click(), () -> { throw new CucumberException("Unable to find list: " + list); });
+                .ifPresentOrElse(div -> addACardInListButton(div).click(), () -> { throw new CucumberException("Unable to find list: " + list); });
 
         cardTitleTextArea().sendKeys(title);
         addCardButton().click();
     }
 
-    public void verifyCardInList(final String title) {
-        Assertions.assertTrue(cards().stream()
-                .anyMatch(card -> card.getText().equalsIgnoreCase(title)));
+    public void verifyCardInList(final String name, final String list) {
+        WebElement listElement = listDivisions().stream()
+                .filter(div -> div.getText().startsWith(list))
+                .findFirst()
+                .orElseThrow(() -> new CucumberException("Unable to find list: " + list));
+
+        WebElement card = listElement.findElement(By.cssSelector(CARD));
+
+        Assertions.assertNotNull(card);
+        Assertions.assertEquals(name, card.getText(), "No card found with name: " + name);
+    }
+
+    public void openCardDetails(final String name) {
+        cards().stream()
+                .filter(card -> card.getText().equalsIgnoreCase(name))
+                .findFirst()
+                .ifPresentOrElse(WebElement::click, () -> { throw new CucumberException("Unable to find card with name: " + name); });
     }
 
     private WebElement header() {
@@ -65,7 +79,7 @@ public class BoardPage extends BasePage {
         return getBrowser().findElements(LIST_DIVISIONS);
     }
 
-    private WebElement addACardButton(WebElement listElement) {
+    private WebElement addACardInListButton(WebElement listElement) {
         return listElement.findElement(By.cssSelector(ADD_A_CARD_IN_LIST_BUTTON));
     }
 

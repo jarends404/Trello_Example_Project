@@ -1,9 +1,6 @@
 package nl.example.pages.base;
 
-import nl.example.pages.BoardPage;
-import nl.example.pages.BoardsPage;
-import nl.example.pages.CommonPage;
-import nl.example.pages.LoginPage;
+import nl.example.pages.*;
 
 public class Pages {
 
@@ -24,5 +21,6 @@ public class Pages {
     public LoginPage login = new LoginPage();
     public BoardsPage boards = new BoardsPage();
     public BoardPage board = new BoardPage();
+    public CardPage card = new CardPage();
 
 }

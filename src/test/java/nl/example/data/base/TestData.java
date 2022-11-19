@@ -11,9 +11,7 @@ import java.util.Locale;
 public class TestData {
 
     private static TestData testData;
-
     private static final Faker FAKER = new Faker(Locale.ENGLISH);
-    private static final String WORKSPACE = "test_workspace";
 
     private TestData() {
 
