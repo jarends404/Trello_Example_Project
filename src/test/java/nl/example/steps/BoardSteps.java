@@ -26,13 +26,9 @@ public class BoardSteps extends BaseSteps {
         boardTester.deleteBoard();
     }
 
-    @Given("a new board")
-    public void iCreateANewBoard() {
+    @Given("a new board is displayed")
+    public void iCreateANewBoard() throws MalformedURLException {
         boardTester.createBoard(board);
-    }
-
-    @When("I visit my board")
-    public void iVisitMyBoard() throws MalformedURLException {
         String uri = boardTester.getBoardUri(board);
         getPages().common.navigateTo(uri);
     }
@@ -43,7 +39,7 @@ public class BoardSteps extends BaseSteps {
         getPages().card.moveCardToList(listTo);
     }
 
-    @Then("my created board is visible")
+    @Then("my created board's default elements are displayed")
     public void myCreatedBoardIsVisible() {
         getPages().board.verifyDefaultElementsVisible(board);
     }
@@ -53,7 +49,7 @@ public class BoardSteps extends BaseSteps {
         getPages().board.addCard(list, card.getName());
     }
 
-    @And("a card in the {string} list")
+    @And("there is a card in the {string} list")
     public void addACardToTheList(String list) {
         String listId = boardTester.getListId(list);
         cardTester.createCard(card, listId);
