@@ -3,7 +3,7 @@ Feature: As a user I want to interact with my board to keep track of the progres
 
   Scenario: The user can view a board
     Given a new board is displayed
-    Then my created board's default elements are displayed
+    Then my created board's default elements are visible
 
   Scenario: The user can add cards to his board
     Given a new board is displayed

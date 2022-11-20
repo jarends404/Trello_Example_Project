@@ -39,7 +39,7 @@ public class BoardSteps extends BaseSteps {
         getPages().card.moveCardToList(listTo);
     }
 
-    @Then("my created board's default elements are displayed")
+    @Then("my created board's default elements are visible")
     public void myCreatedBoardIsVisible() {
         getPages().board.verifyDefaultElementsVisible(board);
     }
