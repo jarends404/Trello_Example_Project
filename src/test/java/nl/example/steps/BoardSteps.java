@@ -33,18 +33,18 @@ public class BoardSteps extends BaseSteps {
         getPages().common.navigateTo(uri);
     }
 
-    @When("I move the card to the {string} list")
+    @When("the user moves the card to the {string} list")
     public void iMoveTheCardFromTheListToTheList(String listTo) {
         getPages().board.openCardDetails(card.getName());
         getPages().card.moveCardToList(listTo);
     }
 
-    @Then("my created board's default elements are visible")
+    @Then("the created board's default elements are visible")
     public void myCreatedBoardIsVisible() {
         getPages().board.verifyDefaultElementsVisible(board);
     }
 
-    @And("I create a new card in the {string} list")
+    @And("the user creates a new card in the {string} list")
     public void iCreateANewCardInTheList(String list) {
         getPages().board.addCard(list, card.getName());
     }
