@@ -26,8 +26,12 @@ public class TestData {
 
     @Getter
     private final AtlassianAccount atlassianAccount = AtlassianAccount.getInstance();
+    @Getter
+    private final Board board = buildBoard();
+    @Getter
+    private final Card card = buildCard();
 
-    public Board getBoard() {
+    private Board buildBoard() {
         return Board.builder()
                 .name("test_board_" + FAKER.number().digits(5))
                 .defaultLabels(true)
@@ -36,7 +40,7 @@ public class TestData {
                 .build();
     }
 
-    public Card getCard() {
+    private Card buildCard() {
         return Card.builder()
                 .name("test_card_" + FAKER.number().digits(5))
                 .description(FAKER.harryPotter().quote())
