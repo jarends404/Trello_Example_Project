@@ -12,6 +12,11 @@ public class WebHook {
     private final Pages pages = Pages.getInstance();
     private final TestData data = TestData.getInstance();
 
+    /**
+     * Starts a browser window in the desired browser (chrome, firefox and safari are currently supported).
+     * On the first scenario execution, the user is logged in through the UI. All cookies are stored on succesful
+     * login for subsequent scenario's.
+     */
     @Before("@chrome or @firefox or @safari")
     public void startBrowser() {
         browser.startBrowser();
@@ -27,6 +32,11 @@ public class WebHook {
         }
     }
 
+    /**
+     * Closes the browser window and makes a screenshot if the current scenario has a failed status.
+     *
+     * @param scenario  Cucumber scenario
+     */
     @After("@chrome or @firefox or @safari")
     public void closeBrowser(Scenario scenario) {
         if (scenario.isFailed()) {

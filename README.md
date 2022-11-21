@@ -3,7 +3,7 @@
 
   <p align="center">
     This project serves as an example of how to set up a test automation project using Java, Selenium WebDriver and Cucumber. <br/>
-    Trello is chose as the system under test.
+    Trello is chosen as the system under test.
     <br />
     <a href="https://github.com/jarends404/Java_Selenium_Cucumber/issues">Report Bug</a>
     ·
@@ -52,6 +52,14 @@ If you don't have Maven installed on your machine, you can use the Maven wrapper
 In that case, replace `mvn` with `./mvnw`
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- FURTHER IMPROVEMENTS -->
+## Further Improvements
+
+Some of the improvements that could be added:
+- Being able to run the test suite in Docker and Selenium Grid
+- Parallelize tests to run simultaneous on all browsers
+- Format and upload test report to easy to find location
 
 <!-- CONTACT -->
 ## Contact
