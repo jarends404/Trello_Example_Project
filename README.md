@@ -60,6 +60,8 @@ Some of the improvements that could be added:
 - Being able to run the test suite in Docker and Selenium Grid
 - Parallelize tests to run simultaneous on all browsers
 - Format and upload test report to easy to find location
+- 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTACT -->
 ## Contact
