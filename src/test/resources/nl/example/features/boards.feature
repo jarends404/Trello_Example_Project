@@ -5,6 +5,10 @@ Feature: As a user I want to interact with my board to keep track of the progres
     Given a new board is displayed
     Then the created board's default elements are visible
 
+  Scenario: The user can view a board 2
+    Given a new board is displayed
+    Then the created board's default elements are visible
+
   Scenario: The user can add cards to his board
     Given a new board is displayed
     When the user creates a new card in the "To Do" list
