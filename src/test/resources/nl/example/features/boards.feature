@@ -5,7 +5,7 @@ Feature: As a user I want to interact with my board to keep track of the progres
     Given a new board is displayed
     Then the created board's default elements are visible
 
-  Scenario: The user can view a board 2
+  Scenario: The user can view a board 3
     Given a new board is displayed
     Then the created board's default elements are visible
 
